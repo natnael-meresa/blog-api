@@ -28,10 +28,9 @@ before_script:
   - apk add build-base
 
 build:
-  stage: compile
+  stage: build
   tags: 
-    - gitlab-go-runner
-    - gitlab-go-runners
+    - build
   script: 
     - go build -o bin/blogapi -v .
     # - ./bin/blog
@@ -45,7 +44,7 @@ deploy_test:
     DOCKER_IMAGE_NAME: '$SERVICE_NAME/golang'
 
   tags:
-    - deply_test
+    - deploy_test
   dependencies:
     - build
   script:
