@@ -31,6 +31,7 @@ build:
   stage: build
   tags: 
     - build
+    - blog
   script: 
     - go build -o bin/blogapi -v .
     # - ./bin/blog
@@ -45,6 +46,7 @@ deploy_test:
 
   tags:
     - deploy_test
+    - blog
   dependencies:
     - build
   script:
