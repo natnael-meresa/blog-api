@@ -1,0 +1,44 @@
+image: golang:1.17.1-alpine3.14
+
+stages:
+  - build
+  - deploy_test
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  APP_PORT: 8080
+  SERVICE_NAME: 'blog-api'
+  DEPLOY_PATH: '/home/projects/$SERVICE_NAME'
+  SERVICE_DIST_FILE_PATH: 'build/libs/*.jar'
+  REPO: gitlab.com
+  # GROUP: 2f-interns
+  # PROJECT: naty-ci 
+
+stages:
+  - compile
+  - test
+
+# before_script:
+#   - mkdir -p $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds
+#   - cp -r $CI_PROJECT_DIR $GOPATH/src/$REPO/$GROUP/$PROJECT
+#   - ln -s $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds/$GROUP
+#   - go get -v -d ./...
+
+before_script:
+  - cd $GOPATH/src
+  - mkdir -p $REPO/$CI_PROJECT_NAMESPACE
+  - cd $REPO/$CI_PROJECT_NAMESPACE
+  - ln -s $CI_PROJECT_DIR
+  - cd $CI_PROJECT_NAME
+  - apk add build-base
+
+build:
+  stage: compile
+  tags: 
+    - gitlab-go-runner
+    - gitlab-go-runners
+  script: 
+    - go build -o bin/blogapi -v .
+    # - ./bin/blog
+
+test:
+  stage: test
