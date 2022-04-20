@@ -51,7 +51,6 @@ deploy_test:
     - build
   script:
     - echo "Deploy prod starting..."
-    - ssh -o StrictHostKeyChecking=no $DEPLOY_HOST 'exit'
     - ssh $DEPLOY_HOST "rm -rf $DEPLOY_PATH/*"
     - ssh $DEPLOY_HOST "mkdir -p $DEPLOY_PATH/"
     - zip -r $DIST_FILE Dockerfile $SERVICE_DIST_FILE_PATH
