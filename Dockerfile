@@ -11,4 +11,4 @@ RUN apk --no-cache add tzdata
 
 
 EXPOSE 9000
-CMD ["./bin/blogapi"]
+CMD ["./bin/blog-api"]
