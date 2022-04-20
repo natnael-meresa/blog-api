@@ -33,7 +33,7 @@ build:
     - build
     - blog
   script: 
-    - go build -o bin/blog-api -v .
+    - go build -o bin/blog-api -v cmd/
     # - ./bin/blog
 
 deploy_test:
