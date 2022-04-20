@@ -39,10 +39,10 @@ build:
 deploy_test:
   stage: deploy_test
   variables:
-    DEPLOY_HOST: 'root@your-ip-addres'
+    DEPLOY_HOST: 'root@157.245.40.29'
     DEPLOY_PATH: 'deploy-path/$SERVICE_NAME'
     DIST_FILE: 'SERVICE_NAME-$DISTRIBUTION.jar'
-    DOCKER_IMAGE_NAME: '$SERVICE_NAME/golang'
+    DOCKER_IMAGE_NAME: '$SERVICE_NAME/blogapi'
 
   tags:
     - deploy_test
