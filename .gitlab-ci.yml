@@ -33,16 +33,16 @@ build:
     - build
     - blog
   script: 
-    - go build -o bin/blog-api -v cmd/
+    - go build -o bin/blog-api -v cmd/main.go
     # - ./bin/blog
 
 deploy_test:
   stage: deploy_test
   variables:
-    DEPLOY_HOST: 'root@your-ip-addres'
+    DEPLOY_HOST: 'root@157.245.40.29'
     DEPLOY_PATH: 'deploy-path/$SERVICE_NAME'
     DIST_FILE: 'SERVICE_NAME-$DISTRIBUTION.jar'
-    DOCKER_IMAGE_NAME: '$SERVICE_NAME/golang'
+    DOCKER_IMAGE_NAME: '$SERVICE_NAME/blogapi'
 
   tags:
     - deploy_test
@@ -51,7 +51,6 @@ deploy_test:
     - build
   script:
     - echo "Deploy prod starting..."
-    - ssh -o StrictHostKeyChecking=no $DEPLOY_HOST 'exit'
     - ssh $DEPLOY_HOST "rm -rf $DEPLOY_PATH/*"
     - ssh $DEPLOY_HOST "mkdir -p $DEPLOY_PATH/"
     - zip -r $DIST_FILE Dockerfile $SERVICE_DIST_FILE_PATH
