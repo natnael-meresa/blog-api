@@ -1,7 +1,7 @@
 FROM golang:alpine
 WORKDIR /
 ADD . .
-RUN go build -o bin/blog-api /cmd/main.go
+RUN go build -o bin/blog-api cmd/main.go
 
 
 FROM alpine
