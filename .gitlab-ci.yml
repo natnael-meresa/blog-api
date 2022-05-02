@@ -1,17 +1,11 @@
-image: golang:1.17.1-alpine3.14
+image: golang:1.17-alpine
+
+variables:
+  REPO: gitlab.com
 
 stages:
   - build
-  - deploy_test
-variables:
-  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
-  APP_PORT: 8080
-  SERVICE_NAME: 'blog-api'
-  DEPLOY_PATH: '/home/projects/$SERVICE_NAME'
-  SERVICE_DIST_FILE_PATH: 'build/libs/*.jar'
-  REPO: gitlab.com
-  # GROUP: 2f-interns
-  # PROJECT: naty-ci 
+  - test
 
 # before_script:
 #   - mkdir -p $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds
@@ -28,50 +22,20 @@ before_script:
   - apk add build-base
 
 build:
+  image: docker:latest
   stage: build
+  services:
+    - docker:dind
   tags: 
     - build
-    - blog
+    - gitlab-runner
   script: 
-    - go build -o bin/blog-api -v cmd/main.go
+    - docker build -t app .
     # - ./bin/blog
 
-deploy_test:
-  stage: deploy_test
-  variables:
-    DEPLOY_HOST: 'root@157.245.40.29'
-    DEPLOY_PATH: 'deploy-path/$SERVICE_NAME'
-    DIST_FILE: 'SERVICE_NAME-$DISTRIBUTION.jar'
-    DOCKER_IMAGE_NAME: '$SERVICE_NAME/blogapi'
-
-  tags:
-    - deploy_test
-    - blog
-  dependencies:
-    - build
-  script:
-    - echo "Deploy prod starting..."
-    - ssh $DEPLOY_HOST "rm -rf $DEPLOY_PATH/*"
-    - ssh $DEPLOY_HOST "mkdir -p $DEPLOY_PATH/"
-    - zip -r $DIST_FILE Dockerfile $SERVICE_DIST_FILE_PATH
-    - scp $DIST_FILE $DEPLOY_HOST:$DEPLOY_PATH/
-    - ssh $DEPLOY_HOST "unzip $DEPLOY_PATH/$DIST_FILE -d $DEPLOY_PATH/"
-    - ssh $DEPLOY_HOST "rm $DEPLOY_PATH/$DIST_FILE"
-    - ssh $DEPLOY_HOST "docker system prune -f"
-    - ssh $DEPLOY_HOST "cd $DEPLOY_PATH/ && docker build -f Dockerfile -t $DOCKER_IMAGE_NAME ."
-    - ssh $DEPLOY_HOST "docker stop $SERVICE_NAME || true && docker rm $SERVICE_NAME || true"
-    - ssh $DEPLOY_HOST "docker run -e APP_PORT=$APP_PORT -p $APP_PORT:$APP_PORT --name $SERVICE_NAME -d $DOCKER_IMAGE_NAME"
-    - echo "Deploy prod finished"
-
-
-
-
-
-
-
-
-
-
-
-
-
+test:
+  stage: test
+  tags: 
+    - gitlab-runner
+  script: 
+    - go test ./...
