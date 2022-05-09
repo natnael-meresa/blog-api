@@ -13,13 +13,6 @@ stages:
 #   - ln -s $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds/$GROUP
 #   - go get -v -d ./...
 
-before_script:
-  - cd $GOPATH/src
-  - mkdir -p $REPO/$CI_PROJECT_NAMESPACE
-  - cd $REPO/$CI_PROJECT_NAMESPACE
-  - ln -s $CI_PROJECT_DIR
-  - cd $CI_PROJECT_NAME
-  - apk add build-base
 
 build:
   image: docker:latest
