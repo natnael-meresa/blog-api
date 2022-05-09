@@ -24,6 +24,7 @@ build:
     - gitlab-runner
   script: 
     - docker build -t app .
+    - echo -n $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     # - ./bin/blog
 
 test:
