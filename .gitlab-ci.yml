@@ -25,7 +25,6 @@ test:
     - cockroach:latest
   variables:
     DB_USER: root
-    DB_PASS:
     DB_HOST: cockroachdb
     DB_NAME: blog-api
     DB_PORT: 26257
