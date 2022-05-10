@@ -1,12 +1,12 @@
 FROM golang:alpine as build
 WORKDIR /app
 COPY . .
-RUN go build -o blog-api cmd/main.go
+RUN go build -o bin/blog-api cmd/main.go
 
 
 FROM alpine
-WORKDIR /
-COPY --from=build blog-api blog-api
+COPY --from=build /app/bin/blog-api /app/blog-api
+WORKDIR /app
 RUN apk --no-cache add tzdata
 
 
