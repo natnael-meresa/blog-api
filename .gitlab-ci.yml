@@ -22,7 +22,8 @@ test:
   stage: test
   image: golang:alpine
   services:
-    - cockroachdb/cockroach:latest
+    - name: cockroachdb/cockroach:v21.2.9
+      command: ["start-single-node", "--insecure"]
   variables:
     DB_USER: root
     DB_HOST: cockroachdb
@@ -32,7 +33,6 @@ test:
   tags: 
     - gitlab-runner
   script: 
-    - cockroach start-single-node --insecure && cockroach sql -e < init.sql
     - go install github.com/cucumber/godog/cmd/godog@v0.12.5
     - CGO_ENABLED=0 GOOS=linux godog run .
     
