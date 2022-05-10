@@ -33,5 +33,5 @@ test:
     - gitlab-runner
   script: 
     - go install github.com/cucumber/godog/cmd/godog@v0.12.5
-    - CGO_ENABLED=0 GOOS=linux godog run 
+    - CGO_ENABLED=0 GOOS=linux godog run .
     

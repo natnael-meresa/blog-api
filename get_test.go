@@ -1,4 +1,4 @@
-package article
+package main
 
 import (
 	"context"
