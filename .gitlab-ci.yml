@@ -5,18 +5,18 @@ stages:
   # - build
   - test
 
-build:
-  image: docker:latest
-  stage: build
-  services:
-    - docker:dind
-  tags: 
-    - build
-    - gitlab-runner
-  script: 
-    - echo -n $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - docker build -t app .
-    # - ./bin/blog
+# build:
+#   image: docker:latest
+#   stage: build
+#   services:
+#     - docker:dind
+#   tags: 
+#     - build
+#     - gitlab-runner
+#   script: 
+#     - echo -n $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - docker build -t app .
+#     # - ./bin/blog
 
 test:
   stage: test
