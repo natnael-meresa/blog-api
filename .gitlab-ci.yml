@@ -21,8 +21,7 @@ stages:
 test:
   stage: test
   image: golang:alpine
-  services:
-    - name: cockroachdb/cockroach:latest
+  services: cockroachdb/cockroach:latest
       alias: cockroachdb
       command: ["start-single-node --insecure && cockroach sql -e < init.sql"]    
   variables:
