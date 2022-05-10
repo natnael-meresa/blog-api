@@ -5,13 +5,6 @@ stages:
   - build
   - test
 
-# before_script:
-#   - mkdir -p $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds
-#   - cp -r $CI_PROJECT_DIR $GOPATH/src/$REPO/$GROUP/$PROJECT
-#   - ln -s $GOPATH/src/$REPO/$GROUP $GOPATH/src/_/builds/$GROUP
-#   - go get -v -d ./...
-
-
 build:
   image: docker:latest
   stage: build
@@ -31,5 +24,6 @@ test:
   tags: 
     - gitlab-runner
   script: 
-    - CGO_ENABLED=0 GOOS=linux go test ./...
+    - go install github.com/cucumber/godog/cmd/godog@v0.12.5
+    - CGO_ENABLED=0 GOOS=linux godog run 
     
