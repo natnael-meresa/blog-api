@@ -8,11 +8,13 @@ import (
 	"path/filepath"
 	"time"
 	"twof/blog-api/internal/constant/model"
+	zaplog "twof/blog-api/internal/log"
 )
 
 func (s *service) GetArticles(article *[]model.Article) (err error) {
 	err = s.articlePersist.GetAllArticles(article)
 	if err != nil {
+		zaplog.SugerLogger.Errorf("failed to save new user %s", err.Error())
 		return fmt.Errorf("failed to save new user %s", err.Error())
 	}
 

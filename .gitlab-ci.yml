@@ -1,4 +1,4 @@
-image: golang:1.17-alpine
+image: golang:alpine
 
 variables:
   REPO: gitlab.com

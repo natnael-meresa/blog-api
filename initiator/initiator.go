@@ -18,9 +18,12 @@ import (
 	"twof/blog-api/internal/glue"
 	"twof/blog-api/internal/glue/auth"
 	"twof/blog-api/internal/glue/enforcer"
+	zaplog "twof/blog-api/internal/log"
 )
 
 func Init() {
+
+	zaplog.SugerLogger.Errorf("this is error in initiator")
 
 	db, err := gorm.Open(postgres.Open("postgres://max:roach@localhost:26257/firstproject?sslmode=allow"), &gorm.Config{})
 
