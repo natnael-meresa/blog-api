@@ -26,8 +26,8 @@ test:
   variables:
     DB_USER: root
     DB_PASS:
-    DB_HOST: 127.0.0.1
-    DB_NAME: new_ride_plus
+    DB_HOST: cockroachdb
+    DB_NAME: blog-api
     DB_PORT: 26257
     DB_SSL_MODE: disable
   tags: 
