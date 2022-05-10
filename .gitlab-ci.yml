@@ -21,6 +21,15 @@ build:
 test:
   stage: test
   image: golang:alpine
+  services:
+    - cockroach:latest
+  variables:
+    DB_USER: root
+    DB_PASS:
+    DB_HOST: 127.0.0.1
+    DB_NAME: new_ride_plus
+    DB_PORT: 26257
+    DB_SSL_MODE: disable
   tags: 
     - gitlab-runner
   script: 
