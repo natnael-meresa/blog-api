@@ -2,7 +2,7 @@ variables:
   REPO: gitlab.com
 
 stages:
-  - build
+  # - build
   - test
 
 build:
@@ -22,7 +22,9 @@ test:
   stage: test
   image: golang:alpine
   services:
-    - cockroachdb/cockroach:latest
+    - name: cockroachdb/cockroach:latest
+      alias: cockroachdb
+      command: ["start-single-node --insecure && cockroach sql -e < init.sql"]    
   variables:
     DB_USER: root
     DB_HOST: cockroachdb
