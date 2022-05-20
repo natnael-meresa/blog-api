@@ -24,6 +24,7 @@ test:
   services:
     - name: cockroachdb/cockroach:v21.2.9
       command: ["start-single-node", "--insecure"]
+      alias: db
   variables:
     DB_USER: root
     DB_HOST: cockroachdb

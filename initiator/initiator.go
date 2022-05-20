@@ -25,7 +25,8 @@ func Init() {
 
 	zaplog.SugerLogger.Errorf("this is error in initiator")
 
-	db, err := gorm.Open(postgres.Open("postgres://root@cockroachdb:26257/firstproject?sslmode=allow"), &gorm.Config{})
+	// db, err := gorm.Open(postgres.Open("postgres://root@cockroachdb:26257/firstproject?sslmode=allow"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open("postgres://root@db:26257/defaultdb?sslmode=disable"), &gorm.Config{})
 	// db, err := gorm.Open(postgres.Open("postgres://max:roach@localhost:26257/firstproject?sslmode=allow"), &gorm.Config{})
 
 	if err != nil {
